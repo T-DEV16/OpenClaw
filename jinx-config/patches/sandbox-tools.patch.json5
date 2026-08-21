@@ -1,0 +1,35 @@
+{
+  tools: {
+    sandbox: {
+      tools: {
+        alsoAllow: [
+          // research
+          "web_search",
+          "web_fetch",
+          // memory
+          "memory_get",
+          "memory_search",
+          // goals / planning
+          "create_goal",
+          "get_goal",
+          "update_goal",
+          "update_plan",
+          "progress_card",
+          "ask_user",
+          // messaging (lets it text you on Telegram proactively)
+          "message",
+          // voice
+          "tts",
+          "node_inference",
+          // media / documents
+          "image",
+          "pdf",
+          // file transfer
+          "file_fetch",
+          "dir_list",
+          "dir_fetch",
+        ],
+      },
+    },
+  },
+}

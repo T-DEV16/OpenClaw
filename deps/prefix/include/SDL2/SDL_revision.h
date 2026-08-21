@@ -1,0 +1,8 @@
+/* #undef SDL_VENDOR_INFO */
+#define SDL_REVISION_NUMBER 0
+
+#ifdef SDL_VENDOR_INFO
+#define SDL_REVISION "SDL-v0.3-101-g5ee5740 (" SDL_VENDOR_INFO ")"
+#else
+#define SDL_REVISION "SDL-v0.3-101-g5ee5740"
+#endif

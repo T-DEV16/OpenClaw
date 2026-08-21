@@ -1,0 +1,16 @@
+{
+  audio: {
+    transcription: {
+      // Telegram voice notes arrive as OGG/Opus; whisper.cpp only reads 16kHz
+      // mono WAV, so ffmpeg normalizes first, then whisper prints plain text.
+      // Runs fully local: no audio ever leaves the machine for transcription.
+      command: [
+        "/bin/bash",
+        "-c",
+        'd=$(mktemp -d); trap "rm -rf $d" EXIT; /usr/local/bin/ffmpeg -nostdin -loglevel error -y -i "$0" -ar 16000 -ac 1 -c:a pcm_s16le "$d/a.wav" >/dev/null 2>&1; /usr/local/bin/whisper-cli -m /Users/tarundevesetti/.openclaw/models/whisper/ggml-small.en.bin -f "$d/a.wav" --no-timestamps --no-prints --language en 2>/dev/null',
+        "{{MediaPath}}",
+      ],
+      timeoutSeconds: 120,
+    },
+  },
+}

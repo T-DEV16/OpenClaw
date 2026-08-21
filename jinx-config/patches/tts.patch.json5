@@ -1,0 +1,26 @@
+{
+  messages: {
+    tts: {
+      // "inbound" = speak only when you send a voice message.
+      // Text chats stay text-only, so free-tier Gemini quota is not burned.
+      auto: "inbound",
+      enabled: true,
+      provider: "google",
+      providers: {
+        google: {
+          apiKey: "${GEMINI_API_KEY}",
+          model: "gemini-3.1-flash-tts-preview",
+          speakerVoice: "Charon",
+          audioProfile: "Speak in a calm, composed, refined tone. Precise and understated, like a trusted personal assistant.",
+        },
+        // Offline fallback: macOS built-in `say`, no API key, no quota.
+        "tts-local-cli": {
+          command: "say",
+          args: ["-o", "{{OutputPath}}", "{{Text}}"],
+          outputFormat: "wav",
+          timeoutMs: 120000,
+        },
+      },
+    },
+  },
+}

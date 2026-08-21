@@ -17,6 +17,18 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -g")
 
+# macOS Command Line Tools workaround: on some CLT installs the toolchain's
+# libc++ headers dir (.../CommandLineTools/usr/include/c++/v1) is empty while
+# the SDK ships the full set. Point clang at the SDK's C++ headers so standard
+# headers like <memory>/<string> resolve. Must be set before add_subdirectory.
+if (APPLE)
+    execute_process(COMMAND xcrun --show-sdk-path
+        OUTPUT_VARIABLE OC_SDK_PATH OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
+    if (OC_SDK_PATH AND EXISTS "${OC_SDK_PATH}/usr/include/c++/v1/memory")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -isystem ${OC_SDK_PATH}/usr/include/c++/v1")
+    endif ()
+endif (APPLE)
+
 # CMake compiled directories with dependencies
 add_subdirectory(Box2D)
 add_subdirectory(libwap)
@@ -48,6 +60,18 @@ if (WIN32)
     link_directories(./ThirdParty/SDL2/lib/x86)
     link_directories(./Build_Release)
 endif (WIN32)
+
+# macOS: use the workspace-local SDL2 prefix built from source (deps/prefix),
+# since Homebrew installs cannot be used in this environment.
+if (APPLE)
+    set(OPENCLAW_DEPS "${CMAKE_SOURCE_DIR}/deps/prefix")
+    include_directories(SYSTEM ${OPENCLAW_DEPS}/include)
+    include_directories(SYSTEM ${OPENCLAW_DEPS}/include/SDL2)
+    link_directories(${OPENCLAW_DEPS}/lib)
+    set(CMAKE_MACOSX_RPATH ON)
+    set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
+    set(CMAKE_INSTALL_RPATH "${OPENCLAW_DEPS}/lib")
+endif (APPLE)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../Build_Release)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../android/libs/armeabi-v7a)

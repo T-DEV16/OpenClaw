@@ -1,5 +1,7 @@
 # OpenClaw - Captain Claw (1997) reimplementation
 
+> **Tarun Devesetti fork (`T-DEV16/OpenClaw`):** macOS arm64 build scripts, Jinx config docs, and OMSCS notes are in [`docs/TRAW-HANDOFF.md`](docs/TRAW-HANDOFF.md). Start there for cloud/phone pickup.
+
  - This project is a multiplatform C++ reimplementation of original Captain Claw (1997) platformer game
  - Whole codebase was written from scratch
  - Game uses assets from original game archive (CLAW.REZ)

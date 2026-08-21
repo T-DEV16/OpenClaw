@@ -32,3 +32,11 @@ Build_Release/vim.exe.stackdump
 *.iobj
 *.ipdb
 *.exp
+
+# TRAW macOS local build (see docs/TRAW-HANDOFF.md)
+Build_Release/openclaw
+Build_Release/CLAW.REZ
+deps/src/
+deps/src/*.tgz
+deps/src/*/build
+deps/src/SDL2_gfx-master/obj
