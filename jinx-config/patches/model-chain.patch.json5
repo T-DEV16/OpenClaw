@@ -2,18 +2,14 @@
   agents: {
     defaults: {
       model: {
-        // Descending ladder: try the best model first, fall through on
-        // quota/rate-limit errors, and always land on the local model
-        // which has no quota at all.
-        primary: "google/gemini-3.5-flash",
+        // Codex first. If it fails before the turn is underway, walk Gemini
+        // then local gemma4. A later failure in a turn that already got a
+        // successful model response does not restart on the next model.
+        primary: "openai/gpt-5.6-sol",
         fallbacks: [
-          // 1500 req/day, 1049k context, accepts images
+          "google/gemini-3.5-flash",
           "google/gemini-2.5-flash",
-          // separate quota pool, 1000 req/day, accepts images
           "google/gemini-3.1-flash-lite",
-          // separate quota pool again
-          "google/gemini-2.5-flash-lite",
-          // local, unlimited, works offline — the floor that never fails
           "ollama/gemma4",
         ],
       },

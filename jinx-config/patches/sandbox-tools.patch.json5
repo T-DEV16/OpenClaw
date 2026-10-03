@@ -6,6 +6,7 @@
           // research
           "web_search",
           "web_fetch",
+          "browser",
           // memory
           "memory_get",
           "memory_search",
@@ -22,12 +23,20 @@
           "tts",
           "node_inference",
           // media / documents
-          "image",
+          "view_image",
           "pdf",
           // file transfer
           "file_fetch",
           "dir_list",
           "dir_fetch",
+          // Exact approved MCP tools. Do not use bundle-mcp or group:plugins:
+          // those would also admit newly installed tools without review.
+          "jinx-gmail-readonly__gmail_search",
+          "jinx-gmail-readonly__gmail_get_message",
+          "jinx-gmail-readonly__gmail_get_thread",
+          "jinx-calendar-readonly__calendar_events",
+          "jinx-calendar-write__calendar_create",
+          "jinx-calendar-write__calendar_update",
         ],
       },
     },
